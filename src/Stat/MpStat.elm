@@ -17,13 +17,13 @@ subtract : MpStat -> MpStat -> MpStat
 subtract =
     map2 (-)
 
-multiplyBy : Float -> MpStat -> MpStat
-multiplyBy multiple=
-    map <| (*) multiple
+multiplyBy : MpStat -> Float -> MpStat
+multiplyBy (MpStat a) multiple =
+    MpStat (a * multiple)
 
-divideBy : Float -> MpStat -> MpStat
-divideBy divisor =
-    map <| (\level -> level / divisor)
+divideBy : MpStat -> Float -> MpStat
+divideBy (MpStat a) divisor =
+    MpStat (a / divisor)
 
 fromFloat : Float -> MpStat
 fromFloat =
@@ -32,11 +32,6 @@ fromFloat =
 toFloat : MpStat -> Float
 toFloat (MpStat float) =
     float
-
--- map takes a function that requires 1 parameter
-map : (Float -> Float) -> MpStat -> MpStat
-map f (MpStat a) =
-    MpStat <| f a
 
 -- map2 takes a function that requires 2 parameters
 map2 : (Float -> Float -> Float) -> MpStat -> MpStat -> MpStat

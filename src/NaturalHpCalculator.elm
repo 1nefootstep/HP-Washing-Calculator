@@ -3,7 +3,6 @@ module NaturalHpCalculator exposing (calculateNaturalHp)
 import Stat.Level as Level exposing (Level)
 import Stat.HpStat as HpStat exposing (HpStat)
 import Jobs exposing (Job(..), JobAdvancementLevels, JobAdvHpGain)
-import Debug
 
 
 -- This is the main function in the module
@@ -81,6 +80,18 @@ calculateTotalJobAdvHpGain level jobAdvLevels jobAdvHpGain =
             , jobAdvHpGain.thirdJobAdvHpGain
             , jobAdvHpGain.fourthJobAdvHpGain ]
 
+calculateImprovingHpOffset job =
+    case job of
+        Hero ->
+            HpStat.fromFloat -140
+        DarkKnight ->
+            HpStat.fromFloat -140
+        Paladin ->
+            HpStat.fromFloat -140
+        Buccaneer ->
+            HpStat.fromFloat -654
+        _ ->
+            HpStat.zero
 
 calculateNonBeginnerNaturalHp : Job -> Level -> JobAdvancementLevels -> JobAdvHpGain -> HpStat
 calculateNonBeginnerNaturalHp job level jobAdvLevels jobAdvHpGain =
@@ -91,13 +102,16 @@ calculateNonBeginnerNaturalHp job level jobAdvLevels jobAdvHpGain =
             Jobs.getLevelUpHpGain job
         jobAdvTotalHpGain =
             calculateTotalJobAdvHpGain level jobAdvLevels jobAdvHpGain
+        offset =
+            calculateImprovingHpOffset job
     in
     List.foldl
         HpStat.add
         HpStat.zero
         [ calculateBeginnerNaturalHp levelsAsBeginner
         , HpStat.multiplyBy jobHpGainPerLevel (toFloat (Level.toInt levelsAsNonBeginner))
-        , jobAdvTotalHpGain ]
+        , jobAdvTotalHpGain
+        , offset ]
 
 
 
