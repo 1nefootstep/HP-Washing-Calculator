@@ -3,6 +3,8 @@ module NaturalHpCalculator exposing (calculateNaturalHp)
 import Stat.Level as Level exposing (Level)
 import Stat.HpStat as HpStat exposing (HpStat)
 import Jobs exposing (Job(..), JobAdvancementLevels, JobAdvHpGain)
+import Debug
+
 
 -- This is the main function in the module
 calculateNaturalHp : Job -> Level -> HpStat
@@ -49,7 +51,7 @@ calculateLevelsAsBeginnerAndNonBeginner level firstJobAdvLevel =
     if Level.lessThan level Level.zero then
         (level, Level.zero)
     else
-        (level, differenceInLevels)
+        (firstJobAdvLevel, differenceInLevels)
 
 calculateTotalJobAdvHpGain : Level -> JobAdvancementLevels -> JobAdvHpGain -> HpStat
 calculateTotalJobAdvHpGain level jobAdvLevels jobAdvHpGain =
@@ -84,7 +86,7 @@ calculateNonBeginnerNaturalHp : Job -> Level -> JobAdvancementLevels -> JobAdvHp
 calculateNonBeginnerNaturalHp job level jobAdvLevels jobAdvHpGain =
     let
         (levelsAsBeginner, levelsAsNonBeginner) =
-            calculateLevelsAsBeginnerAndNonBeginner level jobAdvLevels.firstJobAdvLevel
+                (calculateLevelsAsBeginnerAndNonBeginner level jobAdvLevels.firstJobAdvLevel)
         jobHpGainPerLevel =
             Jobs.getLevelUpHpGain job
         jobAdvTotalHpGain =
