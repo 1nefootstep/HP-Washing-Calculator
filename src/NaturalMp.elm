@@ -1,4 +1,4 @@
-module NaturalMpCalculator exposing (calculateNaturalMp)
+module NaturalMp exposing (calculateNaturalMp)
 
 import Stat.Level as Level exposing (Level)
 import Stat.MpStat as MpStat exposing (MpStat)

@@ -1,4 +1,4 @@
-module NaturalHpCalculator exposing (calculateNaturalHp)
+module NaturalHp exposing (calculateNaturalHp)
 
 import Stat.Level as Level exposing (Level)
 import Stat.HpStat as HpStat exposing (HpStat)
